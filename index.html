@@ -50,6 +50,7 @@
             header h1{font-size:2.3rem;}
             header p.versiculo{font-size:1.25rem;}
             .grid-libros{grid-template-columns:1fr;}
+        
         }
     </style>
         <!-- Google Analytics 4 - Perfectos en Unidad -->
@@ -61,6 +62,9 @@
         gtag('config', 'G-9GZVBYMZ8R');
         </script>
         <!-- Fin Google Analytics -->
+    
+    <script data-goatcounter="https://alconsystems.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <header>
@@ -196,20 +200,31 @@
     Ministerio Internacional Perfectos en Unidad © 2025<br>
     Juan 17:21-23 | 1 Corintios 1:10
     
-    <!-- Contador de visitas grande y sin error de código -->
-    <div style="text-align:center; margin:30px auto 10px; padding:15px 0;">
-        <p style="font-size:1.5rem; font-weight:700; color:#ffd700; text-shadow:0 0 12px rgba(255,215,0,0.7); margin-bottom:15px;">
+    <!-- Contador Nuevo -->
+    <div style="text-align:center; margin:30px auto;">
+        <p style="font-size:1.5rem; font-weight:700; color:#ffd700;">
             Visitas Totales
         </p>
-        
-        <!-- Contador escalado SIN envolver los scripts (así no da error) -->
-        <div style="display:inline-block; transform:scale(1.8); transform-origin:center;">
-            <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=c28fb61b3e86e0cb561b5847cd079c25a496640a'></script>
-            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1459320/t/10"></script>
-        </div>
+        <span id="gc-visits"
+            style="font-size:2.2rem; font-weight:bold; color:white;">
+            …
+        </span>
     </div>
+
+    <script>
+    fetch("https://alconsystems.goatcounter.com/counter")
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("gc-visits").textContent = data.count;
+    })
+    .catch(() => {
+        document.getElementById("gc-visits").textContent = "—";
+    });
+    </script>
+    
 </footer>
 
 </body>
 </html>
+
 
