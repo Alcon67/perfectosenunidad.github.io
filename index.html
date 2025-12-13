@@ -213,13 +213,13 @@
     
     <script>
     document.addEventListener("DOMContentLoaded", function () {
-        fetch("https://alconsystems.goatcounter.com/counter.json?path=/")
-            .then(response => response.json())
+        fetch("https://alconsystems.goatcounter.com/counter/.json")
+            .then(res => res.json())
             .then(data => {
                 document.getElementById("gc-visits").textContent = data.count;
             })
             .catch(err => {
-                console.error(err);
+                console.error("GoatCounter error:", err);
                 document.getElementById("gc-visits").textContent = "0";
             });
     });
@@ -229,3 +229,4 @@
 
 </body>
 </html>
+
