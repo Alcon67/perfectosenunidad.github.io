@@ -63,9 +63,8 @@
         </script>
         <!-- Fin Google Analytics -->
     
-    <script data-goatcounter="https://alconsystems.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
 </head>
+
 <body>
 <header>
     <img src="img/PastorGabrielGuardia.jpg" alt="Pastor Antonio Gabriel Guardia">
@@ -106,7 +105,7 @@
             </div>
             <div class="libro-card">
                 <img src="img/P_Manual_de_Resumen_Bíblico.png" alt="Resumen Bíblico">
-                <p><strong>Manual de Resumen Bíblico de los 66 libros</strong></p>
+                <p><strong>Manual de Resumen Bíblico de los 66 libros de la Biblia y anexos</strong></p>
                 <a href="https://drive.google.com/file/d/14_BB8Tl6C2mtlM7g1PFoK_5HqkImGuqs/view?usp=sharing" target="_blank" class="btn">Descargar PDF</a>
             </div>
         </div>
@@ -124,7 +123,6 @@
                 ¡QUIERO INSCRIBIRME GRATIS AHORA!
             </a>
         </center>
-        <img src="img/Perfectos en Unidad.png" alt="Logo Ministerio" class="logo-final">
     </section>
 
     <!-- TESTIMONIO -->
@@ -192,6 +190,8 @@
             <em style="font-size:1.1rem; color:#1e3c72;">2 Corintios 9:7</em>
         </p>
 
+        <img src="img/Perfectos en Unidad.png" alt="Logo Ministerio" class="logo-final">
+
     </section>
 
 </div>
@@ -199,34 +199,8 @@
 <footer>
     Ministerio Internacional Perfectos en Unidad © 2025<br>
     Juan 17:21-23 | 1 Corintios 1:10
-    
-    <!-- Contador Nuevo -->
-    <div style="text-align:center; margin:30px auto;">
-        <p style="font-size:1.5rem; font-weight:700; color:#ffd700;">
-            Visitas Totales
-        </p>
-        <span id="gc-visits"
-              style="font-size:2.6rem; font-weight:bold; color:white;">
-            Cargando…
-        </span>
-    </div>
-    
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        fetch("https://alconsystems.goatcounter.com/counter/.json")
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById("gc-visits").textContent = data.count;
-            })
-            .catch(err => {
-                console.error("GoatCounter error:", err);
-                document.getElementById("gc-visits").textContent = "0";
-            });
-    });
-    </script>
-    
+   
 </footer>
 
 </body>
 </html>
-
