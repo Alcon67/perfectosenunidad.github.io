@@ -6,7 +6,7 @@
     <title>Pastor Antonio Gabriel Guardia | Perfectos en Unidad</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-    <link rel="icon" href="img/Perfectos en Unidad.png" type="image/png">
+    <link rel="icon" href="img/MiniLogo.jpg" type="image/png">
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
         body{font-family:'Montserrat',sans-serif;background:#b1853e;color:#333;line-height:1.7;}
@@ -52,7 +52,42 @@
             .grid-libros{grid-template-columns:1fr;}
         
         }
+
+        /* MENÚ LATERAL FLOTANTE */
+        .menu-lateral {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: rgba(30,60,114,0.95);
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            z-index: 999;
+        }
+
+        .menu-lateral a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 18px;
+            border-radius: 30px;
+            background: transparent;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .menu-lateral a:hover {
+            background: #ffd700;
+            color: #1e3c72;
+            transform: translateX(-5px);
+        }
+
     </style>
+
         <!-- Google Analytics 4 - Perfectos en Unidad -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-9GZVBYMZ8R"></script>
         <script>
@@ -66,7 +101,17 @@
 </head>
 
 <body>
-<header>
+    <div class="menu-lateral">
+        <a href="#inicio">Inicio</a>
+        <a href="#libros">Mis Libros</a>
+        <a href="#curso">Curso Bíblico</a>
+        <a href="#testimonio">Mi Testimonio</a>
+        <a href="#suscripcion">Suscripción</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#donar">Donar</a>
+    </div>
+
+<header id="inicio">
     <img src="img/PastorGabrielGuardia.jpg" alt="Pastor Antonio Gabriel Guardia">
     <h1>Pastor Antonio Gabriel Guardia</h1>
     <p class="versiculo">«…para que todos sean uno… para que sean perfectos en unidad…»<br><span style="color:#ffd700; font-style:italic;">Juan 17:21-23</span></p>
@@ -75,7 +120,7 @@
 
 <div class="container">
     <!-- LIBROS -->
-    <section>
+    <section id="libros">
         <h2>Mis Libros Cristianos – Descarga Gratuita</h2>
         <div class="grid-libros">
             <div class="libro-card">
@@ -112,7 +157,7 @@
     </section>
 
     <!-- CURSO -->
-    <section>
+    <section id="curso">
         <h2>Curso Bíblico Cristiano – Etapa 1</h2>
         <p style="text-align:center;font-size:1.3rem;"><strong>48 estudios 100% gratuitos + certificado digital al finalizar</strong></p>
         <img src="img/1. INVITACION.jpg" alt="Invitación" style="width:100%;max-width:650px;display:block;margin:20px auto;border-radius:15px;">
@@ -126,7 +171,7 @@
     </section>
 
     <!-- TESTIMONIO -->
-    <section class="testimonio">
+    <section class="testimonio" id="testimonio">
         <h2>Mi Testimonio Personal</h2>
         <p><strong>Hola a todos, Dios les bendiga con su poderosa presencia!!</strong></p>
         <p>Mi nombre es Antonio Gabriel Guardia, soy pastor cristiano, nacido en Argentina en 1967 en la provincia de Mendoza…</p>
@@ -135,7 +180,7 @@
     </section>
 
     <!-- SUSCRIPCIÓN A NOVEDADES -->
-    <section style="background:#fffbe6; padding:50px 20px; text-align:center; border-top:8px solid #ffd700;">
+    <section style="background:#fffbe6; padding:50px 20px; text-align:center; border-top:8px solid #ffd700;" id="suscripcion">
         <h2 style="color:#1e3c72; font-size:2rem;">¡SUSCRIBIRME A LAS NOVEDADES DEL MINISTERIO!</h2>
         <p style="font-size:1.3rem; max-width:900px; margin:20px auto;">
             Te avisaré cuando suba libros nuevos, cursos, cambios o palabras de bendición.
@@ -151,14 +196,14 @@
     </section>
 
     <!-- CONTACTO -->
-    <section style="text-align:center;">
+    <section style="text-align:center;" id="contacto">
         <h2>Contacto</h2>
         
         <!-- Botón WhatsApp (sin número visible en el código) -->
         <a href="javascript:void(0)" 
         onclick="window.open('https://wa.me/5492615100935','_blank')" 
         class="btn btn-whatsapp">
-        WhatsApp +54 9 261 510-0935
+        WhatsApp
         </a>
         
         <!-- Botón Correo (sin mail visible en el código) -->
@@ -170,7 +215,7 @@
     </section>
 
     <!-- SECCIÓN PARA DONACIONES -->
-    <section style="background:#fffbe6; padding:40px; text-align:center;">
+    <section style="background:#fffbe6; padding:40px; text-align:center;" id="donar">
         <h2 style="color:#1e3c72;">¿Querés bendecir este ministerio?</h2>
         <p style="font-size:1.2rem; max-width:700px; margin:20px auto;">
             Si el Señor pone en tu corazón colaborar con este ministerio 100% gratuito, 
@@ -204,3 +249,4 @@
 
 </body>
 </html>
+
