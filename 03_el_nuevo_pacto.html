@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudios Bíblicos ENP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" href="img/MiniLogo.jpg" type="image/png">
+    
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: 'Montserrat', sans-serif; background: #b1853e; color: #333; line-height: 1.7;}
+        
+        header {background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; text-align: center; padding: 20px 20px;}
+        header h1 {font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 10px;}
+        header p {font-size: 1.2rem; color: #ffd700;}
+        
+        .container {max-width: 1200px; margin: 0 auto; padding: 5px 25px 5px 25px;}
+       
+        .categoria-section {background: white; margin: 25px 0; padding: 30px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);}
+        .categoria-section h3 {color: #1e3c72; border-bottom: 3px solid #ffd700; padding-bottom: 12px; margin-bottom: 20px; font-size: 1.6rem; text-align: center;}
+       
+        .estudio-item {padding: 12px; margin-bottom: 20px; /* Separación entre estudios */ background: #fff7ff; border-radius: 12px; border-left: 4px solid #ffd700; transition: 0.3s;}
+
+        .estudio-item:hover {background: #e6f2ff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
+        
+        .estudio-header {display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;}
+        
+        .estudio-info {flex: 1; min-width: 250px;}
+        .estudio-info h4 {color: #1e3c72; margin-bottom: 8px; font-size: 1.2rem;}
+        .estudio-info p {color: #666; font-size: 0.95rem; line-height: 1.5;}
+        
+        .botones-container {display: flex; gap: 10px; flex-wrap: wrap;}
+        
+        .btn-imagen {border: none; background: none; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; border-radius: 8px; overflow: hidden;}
+        .btn-imagen:hover {transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.2);}
+        .btn-imagen img {display: block; width: 32px; height: auto; border-radius: 8px;}
+       
+        .btn-volver {background: #ffd700; color: #1e3c72; margin: 30px auto; display: block; width: fit-content; font-size: 1.2rem; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s;}
+
+        .volver-container {
+            position: fixed;  /* ⭐ Hacerlo flotante */
+            top: 15px;        /* ⭐ Posición desde arriba */
+            left: 15px;       /* ⭐ Posición desde la izquierda */
+            z-index: 1000;    /* ⭐ Mantenerlo por encima de otros elementos */
+        }
+
+        .btn-volver-imagen {
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);  /* ⭐ Sombra para destacar */
+        }
+
+        .btn-volver-imagen:hover {
+            transform: scale(1.1);  /* ⭐ Cambio: scale en lugar de translateY */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn-volver-imagen img {
+            display: block;
+            height: 40px;     /* ⭐ Ajusta este valor para cambiar el tamaño */
+            width: auto;
+            border-radius: 8px;
+        }
+
+
+
+
+        .btn-volver:hover {background: #1e3c72; color: white; transform: scale(1.05);}
+
+        
+        /* MODAL DE PRESENTACIÓN */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.8); 
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: white; 
+            margin: 3% auto; 
+            padding: 0; 
+            border-radius: 20px; 
+            max-width: 900px; 
+            width: 90%; 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3); 
+            animation: slideIn 0.3s;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298); 
+            color: white; 
+            padding: 5px 25px;  /* ⭐ REDUCIDO */
+            border-radius: 20px 20px 0 0; 
+            display: flex; 
+            justify-content: flex-end;  /* ⭐ X a la derecha */
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            display: none;  /* ⭐ OCULTO */
+        }
+
+        .close {
+            color: white; 
+            font-size: 35px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s;
+        }
+
+        .close:hover {
+            color: #ffd700; 
+            transform: scale(1.2);
+        }
+
+        .modal-body {
+            padding: 30px; 
+            display: flex; 
+            gap: 25px; 
+            flex-wrap: wrap;
+            background: #dcc072;  /* ⭐ FONDO SUAVE */
+            /* border-radius: 0 0 20px 20px;  /* ⭐ Redondear esquinas inferiores */
+        }
+
+        .portada-container {
+            flex: 0 0 350px; 
+            text-align: center;
+        }
+
+        .portada-container img {
+            width: 100%; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .descripcion-container {
+            flex: 1; 
+            min-width: 300px;
+            font-weight: 600;
+        }
+
+        .descripcion-container p {
+            font-size: 1.05rem; 
+            line-height: 1.8; 
+            color: #333; 
+            text-align: justify;
+            margin-bottom: 15px; /* Espacio entre párrafos */
+        }
+
+        .modal-footer {
+            padding: 20px 30px; 
+            background: #e8e4dc;  /* ⭐ Fondo footer más oscuro que el body */
+            border-radius: 0 0 20px 20px; 
+            text-align: center;
+        }
+
+        .modal-footer p {
+            color: #1e3c72; 
+            font-weight: 600; 
+            font-size: 1.1rem;
+        }
+
+
+        
+        @keyframes fadeIn {from {opacity: 0;} to {opacity: 1;}}
+        @keyframes slideIn {from {transform: translateY(-50px); opacity: 0;} to {transform: translateY(0); opacity: 1;}}
+        
+        @media (max-width: 768px) {
+            header h1 {font-size: 2rem;}
+            .estudio-header {flex-direction: column; align-items: flex-start;}
+            .botones-container {width: 100%; justify-content: center;}
+            .btn-imagen img {width: 32px;}
+            .modal-body {flex-direction: column;}
+            .portada-container {flex: 1; margin: 0 auto;}
+            .volver-container {
+                top: 10px;
+                left: 7px;
+            }
+            
+            .btn-volver-imagen img {
+                height: 30px;  /* Más pequeño en móviles */
+            }                   
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Estudios Bíblicos</h1>
+        <p style="font-size: 1rem; margin-top: 10px;">Pastor Antonio Gabriel Guardia</p>
+    </header>
+
+    <!-- ⭐ BOTÓN FLOTANTE PARA RESGRESAR A LA PÁGINA PRINCIPAL -->
+    <div class="volver-container">
+        <a href="index.html" class="btn-volver-imagen" title="Volver a la Página Principal">
+            <img src="img/Regresar.png" alt="Volver a la Página Principal">
+        </a>
+    </div>    
+
+    <div class="container">
+
+        <!-- TEMAS BÁSICOS CRISTIANOS - 28 Estudios Bíblicos -->
+        <div class="categoria-section" id="cat-doctrina">
+            <h3>EL NUEVO PACTO</h3>
+            
+            <!-- ESTUDIO 01 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>01 ENP - El plan de salvación de Dios para el hombre</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('01')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1FwZf43h4w3g4QVHaWwWxjOYv4KKzaTdO/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/178-qJbi3scwg9xEFhG10oC6Hp7dQwNV7/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 02 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>02 ENP - Abraham y el Nuevo Pacto</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('02')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1WD4G6lZlZefgmcnMC8sGBKrBXR9D0th5/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1gAXZg3yyfQNTldU84aGRtBnbr2rt3Oqa/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 03 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>03 ENP - La superioridad del Nuevo Pacto</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('03')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1DrvqJEVctRgGxMWpTMesxww7yKKJ7vik/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1w1IBDCmwYoQNHuw7o7R7Yi9HlWA0nERP/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 04 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>04 ENP - Un Pacto establecido sobre mejores promesas</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('04')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1i2OXvSKMOZZ0NlGAcwcgnHJs5CEFdCQT/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1rXtkuFW_duvjg8a4IoUWhnt4hqPaDcT-/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 05 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>05 ENP - Promesas Incondicionales G1 - 21 Promesas</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('05')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1lpmInNhixaxgS0wYUnrALH7yE4hDu3K-/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1Fc5Vdel5NXC3sbV713bDzcZxeqFzEGGx/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 06 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>06 ENP - Promesas Incondicionales G2 - Promesa 1</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('06')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1J0Rssly8aBpT-RmIDehW5cCWNebJ5ueu/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/10BYHZtJXGcD_zhxNDQpmCIQ4Wul7wW0G/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 07 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>07 ENP - Promesas Incondicionales G2 - Promesa 2</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('07')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1-8tu6e1ohhT2uJVDMtJDJam4WzIWMsA8/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1co9j70pxMio83jOQZXlbAmtTPJ9-909O/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 08 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>08 ENP - Promesas Incondicionales G2 - Promesa 3</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('08')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1swsNoihcDGTW4Vlo6sgdYqd1Ie16wpnk/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1HJbO43nXTzQNcfBVbypGawkeZHRmsrCh/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 09 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>09 ENP - Promesas Incondicionales G2 - Promesa 4</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('09')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/10lQeQKC2K0AWrdEM-qRm-ECfOiIufnwm/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1BQ3IM_Hg5jWw9lFmrLy73IxxTInuO1nP/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 10 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>10 ENP - Promesas Incondicionales G2 - Promesa 5</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('10')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1GK0716G_7XgGJTp7NXkHATg1ujTJfyvE/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1sjOGm4x8e_VeND_j0cHRSf46c9dS4cXh/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 11 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>11 ENP - Promesas Incondicionales G2 - Promesa 6</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('11')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1_OShE8KaYk9oDAAMHxkLC94BQRlWxTo-/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1MTC9sv5nR30ZMvwTqIad5kwgsTYgucQ9/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 12 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>12 ENP - Promesas Incondicionales G2 - Promesa 7</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('12')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1eY2XEAnJTctqxYoAy-IgZmqhklddEbNf/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1vCy4pQ_9ZOmnJTtQR-QNyuYIS7Y0ucDF/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 13 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>13 ENP - Promesas Incondicionales G2 - Promesa 8</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('13')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1zwcusOxFdzTBzadFh3kLIyIz3mqJx0wR/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/16hpLJKR4VAHg21V-cGKr-JlNi1x4fjWf/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 14 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>14 ENP - Promesas Incondicionales G2 - Promesa 9</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('14')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1vnzuB9IfCOg0b_UcljKE2CBGkT3ZNGVn/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1a40SX0_OEt2cCneDMqv1eGt1WkM1Mqon/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 15 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>15 ENP - Promesas Incondicionales G2 - Promesa 10 y 11</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('15')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1YX1BY_8JGC9naeoMWUfLnPegPJCsE5bl/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1hNB0QXUF3kxrgRxv4AKiX8PO1wO2stgj/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 16 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>16 ENP - Promesas Incondicionales G2 - Promesa 12</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('16')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1A6TiO_6iaiZz1BoqSgBnpWDt6SpjDzbx/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1QQWwLBY-R7OoyQGj_UQPJnW7uWKYQbdp/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 17 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>17 ENP - Promesas Incondicionales G2 - Promesa 13 y 14</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('17')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/15d3BQ4p1I9ih5LXrZgz9v3RwAq_y_O_X/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/18ircEOjmyms6k0sytsVQ_zmcFBuiQX2b/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 18 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>18 ENP - Promesas Condicionales G1</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('18')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1SnXbEApFBfY5p9MeNQS3ZjUlSEJrxPmp/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1dXfoC6KXgC_gETuxd0t5vncXjgY9oMH2/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 19 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>19 ENP - Promesas Condicionales G2</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('19')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1uXlECXHLntLiOEGZ3H4Fxb8_mOHcJ6nF/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/146ubc0tCTx5cmGjygD1-3aiyWDB5pg8I/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIO 20 -->
+            <div class="estudio-item">
+                <div class="estudio-header">
+                    <div class="estudio-info">
+                        <h4>20 ENP - Promesas Futuras para el Milenio y la Eternidad</h4>
+                    </div>
+                    
+                    <div class="botones-container">
+                        <!-- Botón Formulario para compartir reflexión o comentario sobre este estudio -->
+                        <a href="https://forms.gle/ghomTHBA9CT4AVvF8" target="_blank" class="btn-imagen" title="Compartir reflexión o comentario sobre este estudio">
+                            <img src="img/Enviar-Comentario.png" alt="Enviar Comentario">
+                        </a>
+
+                        <!-- Botón Ver Presentación -->
+                        <button class="btn-imagen" onclick="abrirModal('20')" title="Ver Presentación del Estudio">
+                            <img src="img/Presentacion-de-Estudio.png" alt="Ver Presentación">
+                        </button>
+                        
+                        <!-- Botón Descargar Fondo Blanco -->
+                        <a href="https://drive.google.com/file/d/1_pS3WnbG2dWF2KQn6iDOkgSqeknlYnhq/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Blanco (Para Imprimir)">
+                            <img src="img/Descarga-PDF-FB.png" alt="PDF Fondo Blanco">
+                        </a>
+                        
+                        <!-- Botón Descargar Fondo Color -->
+                        <a href="https://drive.google.com/file/d/1iejv9MSA9rsabsQsGV-_QMg60yW4iKDm/view?usp=sharing" target="_blank" class="btn-imagen" title="Descargar PDF Fondo Color (Para Leer en Pantalla)">
+                            <img src="img/Descarga-PDF-FC.png" alt="PDF Fondo Color">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+           
+            
+        </div>
+
+
+    </div>
+
+    <!-- MODAL DE PRESENTACIÓN -->
+    <div id="modalPresentacion" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitulo">Presentación del Estudio</h2>
+                <span class="close" onclick="cerrarModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="portada-container">
+                    <img id="modalPortada" src="" alt="Portada del Estudio">
+                </div>
+                <div class="descripcion-container">
+                    <div id="modalDescripcion"></div>  <!-- Cambiar <p> por <div> -->
+                    <!-- <p id="modalDescripcion"></p> -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p>💡 Usa los botones de descarga para obtener el PDF completo</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de los estudios (portadas y descripciones)
+        const estudios = {
+            '01': {
+                //titulo: '01 ENP - El plan de salvación de Dios para el hombre',
+                portada: 'img/ENP - 01.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto revela la respuesta divina al mayor problema del hombre: su incredulidad. Desde el Edén, la desconfianza en Dios abrió la puerta al pecado, la muerte y la condenación. Pero en medio de la caída, Dios trazó un plan de salvación: una promesa que vencería al engaño de Satanás y restauraría la esperanza.',
+                    'Este estudio nos invita a reconocer la raíz de nuestra separación —no creerle a Dios— y a descubrir cómo la fe en Jesucristo abre el camino a la vida eterna. El plan de salvación no es teoría, es la oportunidad de volver al propósito original: vivir en comunión con Dios, libres del miedo y llenos de su paz.'
+                ]
+            },
+
+           '02': {
+                //titulo: '02 ENP - Abraham y el Nuevo Pacto',
+                portada: 'img/ENP - 02.png', // La portada del estudio
+                descripcion: [
+                    'La historia de Abraham nos recuerda que la fe no nace perfecta, sino que se forma en el proceso de confiar en Dios. Aunque dudó y tropezó, Dios lo escogió para sellar un pacto que anticipaba el Nuevo Pacto en Cristo.',
+                    'En Abraham vemos que la justificación no depende de obras, sino de creer en la promesa divina. Y esa fe abre la puerta a la mayor bendición: ser perdonados y habitados por el Espíritu Santo.',
+                    'Este estudio nos invita a mirar más allá de la religión o la ley, y descubrir que la verdadera herencia es Cristo mismo, quien cumple las promesas y nos asegura una vida transformada por su gracia.'
+                ]
+            },
+
+           '03': {
+                //titulo: '03 ENP - La superioridad del Nuevo Pacto',
+                portada: 'img/ENP - 03.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto no es una extensión del antiguo, es su cumplimiento y superación. Mientras la ley revelaba la incapacidad del hombre y lo mantenía bajo condenación, Cristo inaugura un pacto de gracia que transforma desde adentro. Ya no se trata de obedecer para obtener bendiciones terrenales, sino de creer para recibir una herencia eterna.',
+                    'Este estudio nos muestra que aferrarse al viejo pacto es despreciar la obra de Jesús, pero abrazar el Nuevo Pacto es entrar en una vida guiada por el Espíritu Santo, con esperanza segura y gloria permanente.',
+                    'Aquí descubrimos por qué el ministerio de la justificación es infinitamente más glorioso que el ministerio de la letra: porque nos acerca a Dios y nos asegura la eternidad.'
+                ]
+            },
+
+           '04': {
+                //titulo: '04 ENP - Un Pacto establecido sobre mejores promesas',
+                portada: 'img/ENP - 04.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto no descansa en la fragilidad del hombre, sino en la fidelidad de Dios. Mientras el antiguo pacto dependía de la obediencia humana y fracasó, el Nuevo Pacto asegura que es Dios mismo quien limpia, transforma y sostiene a sus hijos. Promete un corazón nuevo, un Espíritu que habita en nosotros y una vida guiada por su poder.',
+                    'Este estudio nos invita a confiar en la certeza absoluta de sus promesas: nada ni nadie podrá arrebatarnos de su mano. Descubrir que nuestra salvación y nuestro caminar dependen de su gracia y no de nuestro esfuerzo, es la mayor garantía de esperanza.',
+                    'Aquí se revela la superioridad del Nuevo Pacto: un pacto eterno, seguro, lleno de vida y con las mejores promesas.'
+                ]
+            },
+
+           '05': {
+                //titulo: '05 ENP - Promesas Incondicionales G1 - 21 Promesas',
+                portada: 'img/ENP - 05.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto no sólo nos abre la puerta a la salvación, sino que nos envuelve en un océano de promesas que se cumplen desde el primer instante en que creemos.',
+                    'Ser hijos de Dios, recibir perdón total, un corazón nuevo, la vida eterna y la presencia del Espíritu Santo son realidades que transforman radicalmente nuestra existencia. Estas promesas no dependen de nuestro esfuerzo, sino de la fidelidad de Dios que nos traslada de las tinieblas a su reino de luz.',
+                    'Este estudio nos invita a descubrir que cada promesa es un regalo irrevocable, una certeza que nos asegura identidad, propósito y destino eterno. Aquí se revela la riqueza incomparable de pertenecer a Cristo y vivir bajo su gracia.'
+                ]
+            },
+
+           '06': {
+                //titulo: '06 ENP - Promesas Incondicionales G2 - Promesa 1',
+                portada: 'img/ENP - 06.png', // La portada del estudio
+                descripcion: [
+                    'La salvación en Cristo no es un premio frágil que podamos perder, sino una certeza eterna garantizada por Dios mismo. Jesús prometió que sus ovejas jamás perecerán y que nadie podrá arrebatarlas de su mano.',
+                    'Este estudio nos recuerda que la seguridad de salvación no depende de nuestras obras ni de nuestra prosperidad material, sino de la gracia que nos justificó y nos dio vida eterna. Aunque enfrentemos pruebas, debilidades o luchas, la fidelidad de Dios asegura que llegaremos a su presencia.',
+                    'Aquí descubrimos que la verdadera paz no está en lo que poseemos, sino en saber que nuestro nombre está escrito en los cielos y que nada podrá separarnos del amor de Cristo.'
+                ]
+            },
+
+           '07': {
+                //titulo: '07 ENP - Promesas Incondicionales G2 - Promesa 2',
+                portada: 'img/ENP - 07.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto no sólo nos asegura la salvación, también garantiza que Dios mismo obrará en nosotros para que no vivamos esclavizados al pecado. Aunque todavía tropezamos, el auténtico hijo de Dios no puede practicar el pecado como estilo de vida, porque la presencia del Espíritu Santo transforma su corazón y lo disciplina con amor.',
+                    'Este estudio nos revela que la verdadera fe siempre produce frutos visibles: obras que confirman que hemos nacido de nuevo.',
+                    'Aquí descubrimos que permanecer en Cristo no es un esfuerzo humano, sino una promesa divina: Él nos guarda, nos corrige y nos fortalece para vivir en santidad. La seguridad no está en nuestra fuerza, sino en su fidelidad que nos libra del poder del pecado.'
+                ]
+            },
+
+           '08': {
+                //titulo: '08 ENP - Promesas Incondicionales G2 - Promesa 3',
+                portada: 'img/ENP - 08.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto nos asegura que nada en nuestra vida ocurre fuera del control de Dios. Aunque el mundo lucha por protegerse y controlar las circunstancias, el creyente descansa en la certeza de que todo —aun lo que parece adverso— es usado por el Señor para formar en nosotros la imagen de Cristo.',
+                    'Esta promesa nos invita a cambiar nuestra visión del bien y del mal: lo que antes llamábamos problema ahora es oportunidad de crecimiento. Cada situación, cada prueba, cada sorpresa está diseñada para bendecirnos y acercarnos más al propósito eterno de Dios.',
+                    'Este estudio nos recuerda que la verdadera paz nace al confiar plenamente en que todo lo que sucede es parte del plan perfecto de nuestro Padre.'
+                ]
+            },
+
+           '09': {
+                //titulo: '09 ENP - Promesas Incondicionales G2 - Promesa 4',
+                portada: 'img/ENP - 09.png', // La portada del estudio
+                descripcion: [
+                    'La oración no es un recurso para exigir nuestros deseos, sino el privilegio de alinearnos con el corazón de Dios.',
+                    'El Nuevo Pacto nos asegura que toda petición hecha conforme a su voluntad será escuchada y respondida. Esta promesa nos libera de la ansiedad de pedir mal y nos invita a confiar en que el Padre sabe exactamente lo que necesitamos para cumplir su propósito. Orar no es buscar nuestro deleite, sino recibir fuerza, sabiduría y protección para vivir en obediencia.',
+                    'Este estudio nos recuerda que la verdadera paz surge cuando descansamos en la certeza de que Dios responde siempre, y que incluso cuando su respuesta difiere de la nuestra, es porque Él está obrando lo mejor para nuestra vida.'
+                ]
+            },
+
+           '10': {
+                //titulo: '10 ENP - Promesas Incondicionales G2 - Promesa 5',
+                portada: 'img/ENP - 10.png', // La portada del estudio
+                descripcion: [
+                    'El amor de Dios es la promesa más grande y segura del Nuevo Pacto. No depende de nuestras fuerzas ni de las circunstancias, sino de su fidelidad eterna en Cristo Jesús.',
+                    'La Escritura afirma que ni la muerte, ni la vida, ni ángeles, ni potestades, ni lo presente ni lo por venir podrán separarnos de ese amor. Este estudio nos recuerda que el amor de Dios no es sólo un sentimiento, sino una obra activa que nos transforma, sostiene y asegura nuestra victoria.',
+                    'Vivir bajo esta certeza nos libera del temor, nos da gozo en las pruebas y esperanza en la eternidad. Nada ni nadie podrá romper el vínculo que Dios selló con nosotros en Cristo.'
+                ]
+            },
+
+           '11': {
+                //titulo: '11 ENP - Promesas Incondicionales G2 - Promesa 6',
+                portada: 'img/ENP - 11.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto nos asegura que Dios nunca dejará incompletas nuestras necesidades espirituales. Si entregó a su Hijo por nosotros, ¿cómo no nos dará también todo lo que necesitamos para vivir en su voluntad?',
+                    'Esta promesa no se trata de riquezas materiales, sino de la provisión divina que fortalece nuestro espíritu: poder para vencer el pecado, contentamiento en cualquier circunstancia y gozo en medio de las pruebas. Las palabras del apóstol Pablo “Todo lo puedo en Cristo que me fortalece”, significan que con Cristo, podemos vivir victoriosos sin importar la situación.',
+                    'Este estudio nos invita a descansar en la certeza de que Dios provee siempre lo necesario para que su propósito se cumpla en nosotros.'
+                ]
+            },
+
+           '12': {
+                //titulo: '12 ENP - Promesas Incondicionales G2 - Promesa 7',
+                portada: 'img/ENP - 12.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto nos asegura que ninguna tentación será más fuerte que nuestra capacidad de resistirla con la ayuda de Dios. Él promete que junto con cada prueba proveerá la salida, para que podamos permanecer firmes.',
+                    'Este estudio nos recuerda que la tentación no es señal de derrota, sino una oportunidad para crecer en fe y desprendernos del amor al mundo. La victoria no depende de nuestra fuerza, sino de la palabra de Dios, la paciencia y la sabiduría que Él nos concede.',
+                    'Cada vez que decimos “sí” a Dios y “no” al pecado, somos transformados de gloria en gloria. Aquí descubrimos que la tentación, lejos de ser un obstáculo, es parte del proceso que nos lleva a la plenitud en Cristo.'
+                ]
+            },
+
+           '13': {
+                //titulo: '13 ENP - Promesas Incondicionales G2 - Promesa 8',
+                portada: 'img/ENP - 13.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto nos asegura que el maligno no puede tocarnos ni obligarnos a pecar, porque Dios mismo nos guarda. Antes éramos esclavos del pecado bajo la potestad de las tinieblas, pero ahora hemos sido trasladados al reino de Cristo y vivimos guiados por su Espíritu.',
+                    'Esta promesa nos recuerda que las tentaciones y los dardos del enemigo no tienen poder sobre un hijo de Dios: sólo pueden influir si cedemos en incredulidad. La victoria está en someterse a Dios, resistir al diablo y confiar en su palabra.',
+                    'Este estudio nos invita a vivir con la certeza de que ninguna fuerza externa puede quebrar nuestra libertad en Cristo. Somos más que vencedores porque mayor es el que está en nosotros que el que está en el mundo.'
+                ]
+            },
+
+           '14': {
+                //titulo: '14 ENP - Promesas Incondicionales G2 - Promesa 9',
+                portada: 'img/ENP - 14.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto nos asegura que nunca caminaremos a ciegas: Dios promete guiarnos en todo momento para hacer su voluntad. El Espíritu Santo nos conduce a la verdad, nos recuerda las palabras de Cristo y nos revela el camino correcto aun en medio de la confusión.',
+                    'Esta promesa nos libera del engaño del mundo y de la soberbia de confiar en nuestra propia opinión. El verdadero hijo de Dios no vive según la carne, sino dirigido por el Espíritu, y esa dirección es la evidencia de nuestra adopción.',
+                    'Este estudio nos invita a mantener un corazón dispuesto, confiando en que cada paso guiado por Dios nos aparta del pecado y nos acerca a la plenitud de Cristo.'
+                ]
+            },
+
+           '15': {
+                //titulo: '15 ENP - Promesas Incondicionales G2 - Promesa 10 y 11',
+                portada: 'img/ENP - 15.png', // La portada del estudio
+                descripcion: [
+                    'El amor de Dios no es permisivo, es transformador. Por eso, cuando nos desviamos, Él promete disciplinarnos para corregir nuestro corazón y llevarnos de nuevo a su voluntad.',
+                    'La disciplina no es castigo sin sentido, sino evidencia de que somos verdaderos hijos. Además, nuestra fe será probada, porque sólo una fe genuina puede resistir el fuego de las pruebas y producir paciencia, madurez y esperanza.',
+                    'Este estudio nos recuerda que las dificultades no son señales de abandono, sino oportunidades para crecer y ser perfeccionados en Cristo. La disciplina y la prueba son instrumentos divinos que nos liberan de la confianza en nosotros mismos y nos enseñan a depender totalmente de Dios.'
+                ]
+            },
+
+           '16': {
+                //titulo: '16 ENP - Promesas Incondicionales G2 - Promesa 12',
+                portada: 'img/ENP - 16.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto nos asegura que Dios conoce nuestras necesidades y promete suplirlas conforme a su voluntad. No se trata de acumular riquezas ni de vivir afanados como el mundo, sino de confiar en que el Padre celestial proveerá lo que realmente nos aproveche para crecer en fe y cumplir su propósito.',
+                    'Jesús enseñó que si buscamos primero el reino de Dios y su justicia, todas las demás cosas nos serán añadidas.',
+                    'Este estudio nos recuerda que la verdadera prosperidad no está en la abundancia material, sino en el contentamiento y en ser canales de bendición para otros. La provisión diaria es evidencia de su cuidado, y cada recurso que recibimos es una oportunidad para honrar a Dios con gratitud y generosidad.'
+                ]
+            },
+
+           '17': {
+                //titulo: '17 ENP - Promesas Incondicionales G2 - Promesa 13 y 14',
+                portada: 'img/ENP - 17.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto nos asegura que la obra que Dios comenzó en nosotros no quedará inconclusa. Él perfeccionará nuestro carácter hasta el día de Jesucristo, moldeándonos a la imagen de su Hijo.',
+                    'Esta promesa nos da confianza: aunque tropecemos, Dios no se rendirá con nosotros. Además, el Espíritu Santo nos guía a toda verdad y nos revela las cosas que habrán de venir, para que vivamos preparados y enfocados en la eternidad.',
+                    'Este estudio nos recuerda que la vida cristiana no depende de nuestra fuerza, sino de la fidelidad de Dios que trabaja en nosotros y nos anticipa su plan. Conocer el futuro en Cristo nos llena de esperanza y nos motiva a perseverar con gozo.'
+                ]
+            },
+
+           '18': {
+                //titulo: '18 ENP - Promesas Condicionales G1',
+                portada: 'img/ENP - 18.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto nos recuerda que la manera en que tratamos a los demás será la misma medida con que seremos tratados. Si juzgamos con dureza, seremos juzgados; si perdonamos, seremos perdonados; si damos con generosidad, recibiremos en abundancia.',
+                    'Estas promesas condicionales nos llaman a vivir con misericordia, conscientes de que Dios usa nuestras relaciones para moldear nuestro carácter. Además, la honra a los padres es un mandamiento con promesa: larga vida y bienestar. Honrarles no es solo respeto, sino obediencia y gratitud, reconociendo que ellos representan la primera autoridad de Dios en nuestra vida.',
+                    'Este estudio nos invita a revisar nuestras actitudes y a sembrar amor, perdón y generosidad, porque lo que sembremos será lo que cosechemos en la eternidad.'
+                ]
+            },
+
+           '19': {
+                //titulo: '19 ENP - Promesas Condicionales G2',
+                portada: 'img/ENP - 19.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto nos recuerda que la salvación es segura, pero las recompensas eternas dependen de nuestra fidelidad. Dios promete coronas a quienes vencen el viejo hombre, soportan las pruebas, ganan almas, apacientan la grey y anhelan la venida de Cristo.',
+                    'Estas coronas no son adornos, sino símbolos de autoridad para reinar con Él en la eternidad. Cada decisión diaria, cada acto de obediencia y cada victoria sobre la tentación nos prepara para recibir un galardón incorruptible.',
+                    'Este estudio nos invita a correr la carrera con disciplina, negándonos a nosotros mismos y perseverando con gozo. La verdadera recompensa no está en lo temporal, sino en escuchar un día: “Bien, buen siervo y fiel… entra en el gozo de tu Señor.”'
+                ]
+            },
+
+           '20': {
+                //titulo: '20 ENP - Promesas Futuras para el Milenio y la Eternidad',
+                portada: 'img/ENP - 20.png', // La portada del estudio
+                descripcion: [
+                    'El Nuevo Pacto no solo nos asegura bendiciones presentes, sino también gloriosas promesas futuras. Cristo volverá en poder y gloria, y ese día será de esperanza para los que le esperan y de juicio para los que le rechazan.',
+                    'Reinaremos con Él, tendremos moradas eternas, y nunca más habrá llanto ni dolor, porque Dios enjugará toda lágrima. Los malos recibirán su castigo, pero los hijos de Dios serán honrados y presentados como la esposa del Cordero. La vida eterna no es solo abundancia ahora, sino la certeza de una eternidad con nuestro Señor.',
+                    'Este estudio nos invita a vivir preparados, con fe y fidelidad, aguardando la manifestación gloriosa de Jesucristo y la plenitud de su reino eterno.'
+                ]
+            },
+
+
+
+        };
+
+        // Actualiza la función abrirModal:
+
+        function abrirModal(estudioId) {
+            const estudio = estudios[estudioId];
+            if (estudio) {
+                document.getElementById('modalTitulo').textContent = estudio.titulo;
+                document.getElementById('modalPortada').src = estudio.portada;
+                
+                // Crear párrafos separados
+                const contenedorDescripcion = document.getElementById('modalDescripcion');
+                contenedorDescripcion.innerHTML = ''; // Limpiar contenido anterior
+                
+                estudio.descripcion.forEach(parrafo => {
+                    const p = document.createElement('p');
+                    p.textContent = parrafo;
+                    contenedorDescripcion.appendChild(p);
+                });
+                
+                document.getElementById('modalPresentacion').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }        
+
+        function cerrarModal() {
+            document.getElementById('modalPresentacion').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restaurar scroll
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalPresentacion');
+            if (event.target == modal) {
+                cerrarModal();
+            }
+        }
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                cerrarModal();
+            }
+        });
+    </script>
+</body>
+</html>
+
